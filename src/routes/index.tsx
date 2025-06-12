@@ -8,7 +8,7 @@ export const Route = createFileRoute({
 function HomeComponent() {
   return (
     <div className="flex items-center h-screen justify-center w-full font-inter">
-      <Link to="/templateSelector">
+      <Link to="/template-selector">
         <Button size="lg" className="cursor-pointer text-base">Get started</Button>
       </Link>
     </div>

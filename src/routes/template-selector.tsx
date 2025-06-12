@@ -15,12 +15,12 @@ function RouteComponent() {
     {
       path: "/",
       title: "Classic Template",
-      image: "../../public/images/template1.png",
+      image: "/images/template1.png",
     },
     {
-      path: "/",
+      path: "/modern-template",
       title: "Modern Template",
-      image: "../../public/images/template2.png",
+      image: "/images/template2.png",
     },
   ];
   return (

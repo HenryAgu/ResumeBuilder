@@ -11,18 +11,24 @@
 import type { CreateFileRoute, FileRoutesByPath } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TemplateSelectorRouteImport } from './routes/templateSelector'
+import { Route as TemplateSelectorRouteImport } from './routes/template-selector'
 import { Route as ResumeFormRouteImport } from './routes/resumeForm'
+import { Route as ModernTemplateRouteImport } from './routes/modern-template'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TemplateSelectorRoute = TemplateSelectorRouteImport.update({
-  id: '/templateSelector',
-  path: '/templateSelector',
+  id: '/template-selector',
+  path: '/template-selector',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResumeFormRoute = ResumeFormRouteImport.update({
   id: '/resumeForm',
   path: '/resumeForm',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModernTemplateRoute = ModernTemplateRouteImport.update({
+  id: '/modern-template',
+  path: '/modern-template',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -33,30 +39,39 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/modern-template': typeof ModernTemplateRoute
   '/resumeForm': typeof ResumeFormRoute
-  '/templateSelector': typeof TemplateSelectorRoute
+  '/template-selector': typeof TemplateSelectorRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/modern-template': typeof ModernTemplateRoute
   '/resumeForm': typeof ResumeFormRoute
-  '/templateSelector': typeof TemplateSelectorRoute
+  '/template-selector': typeof TemplateSelectorRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/modern-template': typeof ModernTemplateRoute
   '/resumeForm': typeof ResumeFormRoute
-  '/templateSelector': typeof TemplateSelectorRoute
+  '/template-selector': typeof TemplateSelectorRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/resumeForm' | '/templateSelector'
+  fullPaths: '/' | '/modern-template' | '/resumeForm' | '/template-selector'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/resumeForm' | '/templateSelector'
-  id: '__root__' | '/' | '/resumeForm' | '/templateSelector'
+  to: '/' | '/modern-template' | '/resumeForm' | '/template-selector'
+  id:
+    | '__root__'
+    | '/'
+    | '/modern-template'
+    | '/resumeForm'
+    | '/template-selector'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ModernTemplateRoute: typeof ModernTemplateRoute
   ResumeFormRoute: typeof ResumeFormRoute
   TemplateSelectorRoute: typeof TemplateSelectorRoute
 }
@@ -70,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/modern-template': {
+      id: '/modern-template'
+      path: '/modern-template'
+      fullPath: '/modern-template'
+      preLoaderRoute: typeof ModernTemplateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/resumeForm': {
       id: '/resumeForm'
       path: '/resumeForm'
@@ -77,10 +99,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResumeFormRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/templateSelector': {
-      id: '/templateSelector'
-      path: '/templateSelector'
-      fullPath: '/templateSelector'
+    '/template-selector': {
+      id: '/template-selector'
+      path: '/template-selector'
+      fullPath: '/template-selector'
       preLoaderRoute: typeof TemplateSelectorRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -96,6 +118,15 @@ declare module './routes/index' {
     FileRoutesByPath['/']['fullPath']
   >
 }
+declare module './routes/modern-template' {
+  const createFileRoute: CreateFileRoute<
+    '/modern-template',
+    FileRoutesByPath['/modern-template']['parentRoute'],
+    FileRoutesByPath['/modern-template']['id'],
+    FileRoutesByPath['/modern-template']['path'],
+    FileRoutesByPath['/modern-template']['fullPath']
+  >
+}
 declare module './routes/resumeForm' {
   const createFileRoute: CreateFileRoute<
     '/resumeForm',
@@ -105,18 +136,19 @@ declare module './routes/resumeForm' {
     FileRoutesByPath['/resumeForm']['fullPath']
   >
 }
-declare module './routes/templateSelector' {
+declare module './routes/template-selector' {
   const createFileRoute: CreateFileRoute<
-    '/templateSelector',
-    FileRoutesByPath['/templateSelector']['parentRoute'],
-    FileRoutesByPath['/templateSelector']['id'],
-    FileRoutesByPath['/templateSelector']['path'],
-    FileRoutesByPath['/templateSelector']['fullPath']
+    '/template-selector',
+    FileRoutesByPath['/template-selector']['parentRoute'],
+    FileRoutesByPath['/template-selector']['id'],
+    FileRoutesByPath['/template-selector']['path'],
+    FileRoutesByPath['/template-selector']['fullPath']
   >
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ModernTemplateRoute: ModernTemplateRoute,
   ResumeFormRoute: ResumeFormRoute,
   TemplateSelectorRoute: TemplateSelectorRoute,
 }
