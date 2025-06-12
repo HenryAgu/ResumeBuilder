@@ -28,11 +28,20 @@ function RouteComponent() {
       <h2 className="text-center text-3xl font-bold">Pick a template!</h2>
       <div className="mt-10 flex justify-center items-center gap-x-10">
         {selectTemplate.map((template) => (
-          <div className="">
-            <Link to={template.path}>
-              <img src={template.image} alt={template.title} className="w-[350px] border border-black"/>
+          <div className="group">
+            <Link
+              to={template.path}
+              className=""
+            >
+              <img
+                src={template.image}
+                alt={template.title}
+                className="w-[350px] border border-black hover:border-2 transition-all duration-200 ease-in-out"
+              />
             </Link>
-            <p className="text-center mt-5 text-base font-semibold font-poppins">{template.title}</p>
+            <p className="text-center mt-2.5 text-base font-semibold font-poppins">
+              {template.title}
+            </p>
           </div>
         ))}
       </div>
