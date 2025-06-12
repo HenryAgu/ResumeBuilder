@@ -11,8 +11,14 @@
 import type { CreateFileRoute, FileRoutesByPath } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ResumeFormRouteImport } from './routes/resumeForm'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ResumeFormRoute = ResumeFormRouteImport.update({
+  id: '/resumeForm',
+  path: '/resumeForm',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -21,24 +27,28 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/resumeForm': typeof ResumeFormRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/resumeForm': typeof ResumeFormRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/resumeForm': typeof ResumeFormRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/resumeForm'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/resumeForm'
+  id: '__root__' | '/' | '/resumeForm'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ResumeFormRoute: typeof ResumeFormRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,6 +58,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resumeForm': {
+      id: '/resumeForm'
+      path: '/resumeForm'
+      fullPath: '/resumeForm'
+      preLoaderRoute: typeof ResumeFormRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -62,9 +79,19 @@ declare module './routes/index' {
     FileRoutesByPath['/']['fullPath']
   >
 }
+declare module './routes/resumeForm' {
+  const createFileRoute: CreateFileRoute<
+    '/resumeForm',
+    FileRoutesByPath['/resumeForm']['parentRoute'],
+    FileRoutesByPath['/resumeForm']['id'],
+    FileRoutesByPath['/resumeForm']['path'],
+    FileRoutesByPath['/resumeForm']['fullPath']
+  >
+}
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ResumeFormRoute: ResumeFormRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
