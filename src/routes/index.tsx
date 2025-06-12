@@ -6,9 +6,9 @@ export const Route = createFileRoute({
 
 function HomeComponent() {
   return (
-    <div className="flex items-center h-screen justify-center w-full">
+    <div className="flex items-center h-screen justify-center w-full font-inter">
       <Link
-        to="/resumeForm"
+        to="/templateSelector"
         className="bg-black text-white text-base px-6 py-3.5 rounded-sm transition-all duration-200 ease-in-out hover:opacity-75"
       >
         Get started
