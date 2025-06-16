@@ -29,16 +29,17 @@ function RouteComponent() {
       <div className="mt-10 flex justify-center items-center gap-x-10">
         {selectTemplate.map((template) => (
           <div className="group">
-            <Link
-              to={template.path}
-              className="h-[500px] w-[350px] overflow-hidden bg-red-900 transition-all duration-200 ease-in scale-100"
-            >
-              <img
-                src={template.image}
-                alt={template.title}
-                className="w-[350px] h-[500px] border object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-105"
-              />
-            </Link>
+            <div className="h-[600px] w-[450px] border overflow-hidden">
+              <Link
+                to={template.path}
+              >
+                <img
+                  src={template.image}
+                  alt={template.title}
+                  className="w-full h-full border object-cover  transition-transform duration-300 ease-in-out hover:scale-105"
+                />
+              </Link>
+            </div>
             <p className="text-center mt-2.5 text-base font-semibold font-poppins">
               {template.title}
             </p>
