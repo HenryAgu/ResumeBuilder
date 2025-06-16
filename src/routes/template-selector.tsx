@@ -31,12 +31,12 @@ function RouteComponent() {
           <div className="group">
             <Link
               to={template.path}
-              className=""
+              className="h-[500px] w-[350px] overflow-hidden bg-red-900 transition-all duration-200 ease-in scale-100"
             >
               <img
                 src={template.image}
                 alt={template.title}
-                className="w-[350px] border border-black hover:border-2 transition-all duration-200 ease-in-out"
+                className="w-[350px] h-[500px] border object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-105"
               />
             </Link>
             <p className="text-center mt-2.5 text-base font-semibold font-poppins">
