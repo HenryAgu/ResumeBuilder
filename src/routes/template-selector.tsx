@@ -13,14 +13,14 @@ interface SelectTemplate {
 function RouteComponent() {
   const selectTemplate: SelectTemplate[] = [
     {
-      path: "/",
+      path: "/classic-template",
       title: "Classic Template",
-      image: "/images/template1.png",
+      image: "/images/template2.png",
     },
     {
       path: "/modern-template",
       title: "Modern Template",
-      image: "/images/template2.png",
+      image: "/images/template1.png",
     },
   ];
   return (
