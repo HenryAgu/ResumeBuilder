@@ -14,13 +14,14 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "./ui/textarea";
 import { toast } from "sonner";
 
-// Schema (unchanged from previous version)
+// Updated schema with optional image field
 const resumeSchema = z.object({
   fullName: z.string().min(1, "Full name is required"),
   title: z.string().min(1, "Title is required"),
   address: z.string().min(1, "Address is required"),
   email: z.string().email("Invalid email"),
   phone: z.string().min(7, "Invalid phone number"),
+  image: z.string().optional().or(z.literal("")), // New optional image field
   website: z.string().url("Invalid URL").optional().or(z.literal("")),
   linkedIn: z.string().url("Invalid URL").optional().or(z.literal("")),
   github: z.string().url("Invalid URL").optional().or(z.literal("")),
@@ -75,19 +76,21 @@ const resumeSchema = z.object({
     .optional(),
 });
 
-// Reusable InputField component (unchanged)
+// Reusable InputField component
 const InputField = ({
   name,
   label,
   placeholder,
   type = "text",
   control,
+  accept,
 }: {
   name: string;
   label: string;
-  placeholder: string;
+  placeholder?: string;
   type?: string;
   control: any;
+  accept?: string;
 }) => (
   <FormField
     control={control}
@@ -99,8 +102,25 @@ const InputField = ({
           <Input
             type={type}
             placeholder={placeholder}
+            accept={accept}
             className="border-gray-300 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
-            {...field}
+            {...(type === "file"
+              ? {
+                onChange: (e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                      field.onChange(reader.result as string);
+                    };
+                    reader.readAsDataURL(file);
+                  } else {
+                    field.onChange("");
+                  }
+                },
+                value: undefined, // File inputs don't use value
+              }
+              : field)}
           />
         </FormControl>
         <FormMessage className="text-red-500 text-xs" />
@@ -118,6 +138,7 @@ export function ResumeForm() {
       email: "",
       phone: "",
       address: "",
+      image: "", // Default for new image field
       website: "",
       linkedIn: "",
       github: "",
@@ -155,6 +176,7 @@ export function ResumeForm() {
   async function onSubmit(data: z.infer<typeof resumeSchema>) {
     const finalData = {
       ...data,
+      image: data.image || undefined, // Handle empty image as undefined
       certifications: data.certifications?.length ? data.certifications : undefined,
       projects: data.projects?.length ? data.projects : undefined,
     };
@@ -209,6 +231,13 @@ export function ResumeForm() {
               name="address"
               label="Address"
               placeholder="123 Main St, City"
+              control={form.control}
+            />
+            <InputField
+              name="image"
+              label="Profile Image (Optional)"
+              type="file"
+              accept="image/*"
               control={form.control}
             />
             <InputField
@@ -522,7 +551,6 @@ export function ResumeForm() {
                   label="Technologies Used (Optional)"
                   placeholder="e.g. React, Node.js"
                   control={form.control}
-                  // Transform array to comma-separated string and back
                   {...{
                     value: form.watch(`projects.${index}.technologies`)?.join(", ") || "",
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -555,7 +583,7 @@ export function ResumeForm() {
                     </FormItem>
                   )}
                 />
-                <div className="md:col-span-2 flex justify-between items-end gap-4">
+                <div className="md:col-span-2 flex items-end gap-4">
                   <InputField
                     name={`projects.${index}.link`}
                     label="Project Link (Optional)"
@@ -566,7 +594,7 @@ export function ResumeForm() {
                     type="button"
                     variant="destructive"
                     size="icon"
-                    className="  hover:bg-red-600 transition-colors w-fit p-3"
+                    className="h-10 w-10 hover:bg-red-600 transition-colors"
                     onClick={() => {
                       form.setValue(
                         "projects",
@@ -574,28 +602,28 @@ export function ResumeForm() {
                       );
                     }}
                   >
-                    Remove Project
+                    ×
                   </Button>
                 </div>
-            </div>
+              </div>
             </div>
           ))}
-            <Button
-              type="button"
-              variant="outline"
-              className="hover:bg-gray-100 transition-colors"
-              onClick={() =>
-                form.setValue("projects", [
-                  ...(form.getValues("projects") ?? []),
-                  { name: "", description: "", link: "", technologies: [] },
-                ])
-              }
-            >
-              + Add Project
-            </Button>
-          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="hover:bg-gray-100 transition-colors"
+            onClick={() =>
+              form.setValue("projects", [
+                ...(form.getValues("projects") ?? []),
+                { name: "", description: "", link: "", technologies: [] },
+              ])
+            }
+          >
+            + Add Project
+          </Button>
+        </div>
 
-        {/* Certifications Section (Redesigned) */}
+        {/* Certifications Section */}
         <div className="space-y-6">
           <h2 className="text-2xl font-bold text-gray-800">Certifications (Optional)</h2>
           {form.watch("certifications")?.map((_, index) => (
