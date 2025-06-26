@@ -3,6 +3,7 @@ import Experience from "@/components/modern template/experience";
 import MainHeader from "@/components/modern template/mainHeader";
 import SideBody from "@/components/modern template/sideBody";
 import SideHeader from "@/components/modern template/sideHeader";
+import FloatingButton from "@/components/ui/floatingButton";
 
 export const Route = createFileRoute({
   component: ModernTemplateComponent,
@@ -36,6 +37,7 @@ function ModernTemplateComponent() {
           </p>
         </div>
       </div>
+      <FloatingButton/>
     </main>
   );
 }
