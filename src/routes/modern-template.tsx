@@ -32,7 +32,7 @@ function ModernTemplateComponent() {
         <div className="my-5">
           <p className="font-serif text-2xl font-medium">REFERENCES</p>
           <p className="text-sm font-inter font-normal">
-            [Available upon request]{" "}
+            [Available upon request]
           </p>
         </div>
       </div>
