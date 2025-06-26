@@ -1,7 +1,7 @@
 const FloatingButton = () => {
 
   return (
-    <div className="fixed bottom-4 right-4">
+    <div className="fixed bottom-4 right-4 print:hidden">
       <button
         className="bg-[#101720] p-5 rounded-full shadow-2xl animate-bounce cursor-pointer"
         onClick={() => window.print()}

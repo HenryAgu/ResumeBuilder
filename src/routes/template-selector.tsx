@@ -43,7 +43,7 @@ function RouteComponent() {
                 <img
                   src={template.image}
                   alt={template.title}
-                  className="w-full h-full border object-cover  transition-transform duration-300 ease-in-out hover:scale-105"
+                  className="w-full h-[600px] border object-cover cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105"
                 />
               </div>
             </div>
