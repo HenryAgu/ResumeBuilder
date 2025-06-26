@@ -1,9 +1,7 @@
-import { useState } from "react";
-
 const MainHeader = () => {
-  const [firstName, setFirstName] = useState<string>("KRISTI");
-  const [lastName, setLastName] = useState<string>("LAAR");
-  const [occupation, setOccupation] = useState<string>("REGISTERED NURSE");
+  const firstName: string = "KRISTI";
+  const lastName: string = "LAAR";
+  const occupation: string = "REGISTERED NURSE";
   return (
     <div>
       {/* Name */}

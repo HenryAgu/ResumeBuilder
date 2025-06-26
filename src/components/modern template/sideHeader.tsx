@@ -1,14 +1,8 @@
-import React, { useState } from "react";
-
 const SideHeader = () => {
-      const [profilePhoto, setProfilePhoto] = useState<string>(
-        "/images/profile.png"
-      );
-      const [address, setAddress] = useState<string>(
-        "111 1st Avenue Redmond, WA 65432 909.555.0100"
-      );
-      const [email, setEmail] = useState<string>("kristi@example.com");
-      const [website, setWebsite] = useState("www.interestingsite.com");
+  const profilePhoto: string = "/images/profile.png";
+  const address: string = "111 1st Avenue Redmond, WA 65432 909.555.0100";
+  const email: string = "kristi@example.com";
+  const website: string = "www.interestingsite.com";
   return (
     <div>
       <div className="flex items-end justify-end">
@@ -20,6 +14,7 @@ const SideHeader = () => {
       </div>
       <div className="pl-8 mt-10 flex flex-col">
         <p className="font-serif text-2xl font-medium">CONTACT</p>
+        
         {/* Address */}
         <p className="text-sm font-inter font-normal mt-5 w-[70%]">{address}</p>
         <p className="text-sm font-inter font-normal w-[70%]">{email}</p>
