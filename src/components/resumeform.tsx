@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,9 +14,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "./ui/textarea";
 import { toast } from "sonner";
+import { useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 // Updated schema with optional image field
-const resumeSchema = z.object({
+ // eslint-disable-next-line react-refresh/only-export-components
+ export const resumeSchema = z.object({
   fullName: z.string().min(1, "Full name is required"),
   title: z.string().min(1, "Title is required"),
   address: z.string().min(1, "Address is required"),
@@ -89,6 +93,7 @@ const InputField = ({
   label: string;
   placeholder?: string;
   type?: string;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   control: any;
   accept?: string;
 }) => (
@@ -172,7 +177,13 @@ export function ResumeForm() {
   const {
     formState: { isSubmitting, isValid },
   } = form;
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      localStorage.setItem("resumeFormData", JSON.stringify(value));
+    });
+    return () => subscription.unsubscribe();
+  }, [form, form.watch]);
   async function onSubmit(data: z.infer<typeof resumeSchema>) {
     const finalData = {
       ...data,
@@ -189,7 +200,7 @@ export function ResumeForm() {
         </pre>
       </div>,
     );
-    form.reset();
+    navigate({ to: "/resumePreview" });
   }
 
   return (

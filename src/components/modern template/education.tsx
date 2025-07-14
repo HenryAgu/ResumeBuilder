@@ -1,43 +1,30 @@
-import { useState } from "react";
+import type { FC } from "react";
+import type { z } from "zod";
+import type { resumeSchema } from "@/components/resumeform";
 
-interface Schools {
-  name: string;
-  department: string;
+type ResumeData = z.infer<typeof resumeSchema>;
+
+interface EducationProps {
+  education: ResumeData["education"];
 }
 
-const Education = () => {
-  // schools array
-  const schools: Schools[] = [
-    {
-      name: "Bellows College | Madison, WI",
-      department: "Bachelors Science in Nursing",
-    },
-    {
-      name: "Bachelors of Science in Nursing",
-      department: "Bachelors Science in Nursing",
-    },
-  ];
-
-  const coursework: string =
-    "Anatomy and physiology, pharmacology, nursing ethics, and patient care management.";
+const Education: FC<EducationProps> = ({ education }) => {
   return (
     <section className="my-5">
       <p className="font-serif text-2xl font-medium">EDUCATION</p>
       <div className="my-2 mt-5 flex flex-col gap-y-2">
-        {schools.map((school) => (
-          <div className="">
-            <p className="text-sm font-inter font-normal">{school.name}</p>
-            <p className="text-sm font-inter font-normal">
-              {school.department}
-            </p>
-          </div>
+        {education.map((edu, idx) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+<p key={idx} className="text-sm font-inter font-normal">
+            {edu.degree || "Degree"} - {edu.institution || "Institution"} ({edu.startDate || "Start"} - {edu.endDate || "End"})
+          </p>
         ))}
-        {/* Relevent works */}
+        {/* Relevant coursework */}
         <p className="text-sm font-inter font-normal">
-          Relevant coursework: {coursework}
+          Relevant coursework: {education[0]?.description || "None"}
         </p>
       </div>
-      <div className="h-[0.5px] bg-black mt-10"></div>
+      <div className="h-[0.5px] bg-black mt-10" />
     </section>
   );
 };
