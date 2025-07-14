@@ -34,7 +34,7 @@ const Experience = () => {
     },
   ];
 
-  const [experienceSummary, setExperienceSummary] = useState<string>(
+  const [experienceSummary] = useState<string>(
     "I have a proven track record of delivering high-quality care while maintaining patient safety and satisfaction"
   );
   return (
@@ -43,7 +43,7 @@ const Experience = () => {
       {/* Experience Summary */}
       <div className="mt-5 flex flex-col gap-y-5">
         {experience.map((item) => (
-          <div className="flex flex-col gap-y-1.5">
+          <div className="flex flex-col gap-y-1.5" key={item.role}>
             <p className="text-sm font-inter font-normal">
               {`${item.startMonth} ${item.startYear} - ${item.endMonth} ${item.endYear}`}
             </p>
@@ -52,7 +52,7 @@ const Experience = () => {
         ))}
         <p className="text-sm font-inter font-normal">{experienceSummary}</p>
       </div>
-      <div className="h-[0.5px] bg-black mt-10"></div>
+      <div className="h-[0.5px] bg-black mt-10"/>
     </section>
   );
 };

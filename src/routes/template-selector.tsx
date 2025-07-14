@@ -1,4 +1,6 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import {
+  useNavigate
+} from "@tanstack/react-router";
 
 export const Route = createFileRoute({
   component: RouteComponent,
@@ -37,9 +39,10 @@ function RouteComponent() {
       <h2 className="text-center text-3xl font-bold">Pick a template!</h2>
       <div className="mt-10 flex justify-center items-center gap-x-10">
         {selectTemplate.map((template) => (
-          <div className="group">
+          <div className="group" key={template.title}>
             <div className="h-[600px] w-[450px] border overflow-hidden">
-              <div onClick={() => handleSelection(template.type)}>
+              {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+<div onClick={() => handleSelection(template.type)}>
                 <img
                   src={template.image}
                   alt={template.title}
